@@ -11,6 +11,7 @@ event_influx <- c(1, 0, 0)
 t_max <- 1e11
 output_interval <- 1e6
 event_interval <- 1e8
+method <- "lsoda"
 
 #`rates` should be a vector of three reaction rates.
 derivative <- function(t, y, rates) {
