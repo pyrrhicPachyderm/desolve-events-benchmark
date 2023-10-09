@@ -13,6 +13,9 @@ output_interval <- 1e6
 event_interval <- 1e8
 method <- "lsoda"
 
+stopifnot(length(reaction_rates) == length(y0), length(reaction_rates) == length(event_influx))
+stopifnot(t_max %% event_interval == 0, event_interval %% output_interval == 0)
+
 #`rates` should be a vector of three reaction rates.
 derivative <- function(t, y, rates) {
 	rates <- rates * c(
