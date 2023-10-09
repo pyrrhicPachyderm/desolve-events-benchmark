@@ -76,3 +76,10 @@ manual <- function() {
 	}
 	return(result)
 }
+
+cat("Using events in a data frame:\n")
+microbenchmark::microbenchmark(events_df())
+cat("Using event functions:\n")
+microbenchmark::microbenchmark(events_func())
+cat("Stopping and restarting at events:\n")
+microbenchmark::microbenchmark(manual())
