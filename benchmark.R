@@ -16,6 +16,8 @@ method <- "lsoda"
 stopifnot(length(reaction_rates) == length(y0), length(reaction_rates) == length(event_influx))
 stopifnot(t_max %% event_interval == 0, event_interval %% output_interval == 0)
 
+names(y0) <- LETTERS[1:length(y0)]
+
 all_times <- seq(0, t_max, by = output_interval)
 event_times <- seq(event_interval, t_max - event_interval, by = event_interval)
 divided_times <- lapply(c(0, event_times), function(t) {
