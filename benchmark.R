@@ -38,3 +38,39 @@ derivative <- function(t, y, rates) {
 	)
 	return(list(y))
 }
+
+events_df <- function() {
+	events_data <- data.frame(
+		var = rep(1:length(y0), times = length(event_times)),
+		time = rep(event_times, each = length(y0)),
+		value = rep(event_influx, times = length(event_times)),
+		method = "add"
+	)
+	deSolve::ode(y0, all_times, derivative, reaction_rates, method = method,
+		events = list(data = events_data)
+	)
+}
+
+events_func <- function() {
+	event_f <- function(t, y, parms) {
+		y + event_influx
+	}
+	deSolve::ode(y0, all_times, derivative, reaction_rates, method = method,
+		events = list(func = event_f, time = event_times)
+	)
+}
+
+manual <- function() {
+	solve <- function(y0, times) {
+		deSolve::ode(y0, times, derivative, reaction_rates, method = method)
+	}
+	result <- solve(y0, divided_times[[1]])
+	
+	for(times in divided_times[-1]) {
+		result <- rbind(
+			result,
+			solve(result[nrow(result),-1] + event_influx, times)[-1,]
+		)
+	}
+	return(result)
+}
