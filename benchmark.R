@@ -3,9 +3,11 @@
 #Using the system of equations from Robertson 1966, as given on the Wikipedia page on stiff equations.
 #Robertson 1966. "The solution of a set of reaction rate equations". Numerical Analysis: An Introduction.
 #https://en.wikipedia.org/wiki/Stiff_equation#Motivating_example
+#However, this is too stiff, and causes LSODA to throw a bunch of warnings.
+#So slow down the reactions.
 
 #Constants
-reaction_rates <- c(0.04, 3e7, 1e4)
+reaction_rates <- 1e-3 * c(0.04, 3e7, 1e4)
 y0 <- c(1, 0, 0)
 event_influx <- c(1, 0, 0)
 t_max <- 1e11
